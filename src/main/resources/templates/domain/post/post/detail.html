@@ -22,6 +22,10 @@
         <div th:text="${post.published ? '공개' : '비공개'}"></div>
     </div>
     <div>
+        <h3>Minimum level</h3>
+        <div th:text="${post.minMembershipLevel}"></div>
+    </div>
+    <div>
         <h3>제목</h3>
         <div th:text="${post.title}"></div>
     </div>
