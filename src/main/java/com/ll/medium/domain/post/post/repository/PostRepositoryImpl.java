@@ -29,7 +29,7 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
         if (kw != null && !kw.isBlank()) {
             condition = condition.and(
                     post.title.containsIgnoreCase(kw)
-                            .or(post.body.containsIgnoreCase(kw))
+                            .or(post.detailBody.val.containsIgnoreCase(kw))
             );
         }
 
@@ -71,7 +71,7 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
         if (kw != null && !kw.isBlank()) {
             condition = condition.and(
                     post.title.containsIgnoreCase(kw)
-                            .or(post.body.containsIgnoreCase(kw))
+                            .or(post.detailBody.val.containsIgnoreCase(kw))
             );
         }
 

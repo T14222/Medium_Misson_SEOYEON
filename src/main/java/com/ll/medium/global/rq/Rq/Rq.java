@@ -8,14 +8,12 @@ import jakarta.persistence.EntityManager;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.util.URLEncoder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.RequestScope;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 @Component
@@ -30,15 +28,24 @@ public class Rq {
     public String redirect(String url, String msg) {
         String[] urlBits = url.split("#", 2);
         url = urlBits[0];
-        msg = URLEncoder.DEFAULT.encode(msg, StandardCharsets.UTF_8);
 
         StringBuilder sb = new StringBuilder();
 
         sb.append("redirect:");
+
+        url = Ut.url.deleteQueryParam(url, "msg");
+
         sb.append(url);
 
-        if (msg != null) {
-            sb.append("?msg=");
+        if (Ut.str.hasLength(msg)) {
+            msg = Ut.url.encode(msg);
+
+            if (url.contains("?")) {
+                sb.append("&msg=");
+            } else {
+                sb.append("?msg=");
+            }
+
             sb.append(msg);
         }
 
@@ -57,9 +64,7 @@ public class Rq {
     }
 
     public String redirectOrBack(RsData<?> rs, String path) {
-        if (rs.isFail()) {
-            return historyBack(rs.getMsg());
-        }
+        if (rs.isFail()) return historyBack(rs.getMsg());
 
         return redirect(path, rs.getMsg());
     }
@@ -107,12 +112,27 @@ public class Rq {
     }
 
     public Member getMember() {
-        if ( isLogout() ) return null;
-        
+        if (isLogout()) return null;
+
         if (member == null) {
             member = entityManager.getReference(Member.class, getUser().getId());
         }
 
         return member;
+    }
+
+    public String getEncodedCurrentUrl() {
+        return Ut.url.encode(getCurrentUrl());
+    }
+
+    private String getCurrentUrl() {
+        String url = request.getRequestURI();
+        String queryString = request.getQueryString();
+
+        if (queryString != null) {
+            url += "?" + queryString;
+        }
+
+        return url;
     }
 }

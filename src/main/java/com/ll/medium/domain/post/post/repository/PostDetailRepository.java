@@ -8,4 +8,6 @@ import java.util.Optional;
 
 public interface PostDetailRepository extends JpaRepository<PostDetail, Long> {
     Optional<PostDetail> findByPostAndName(Post post, String name);
+
+    void deleteByPost(Post post);
 }

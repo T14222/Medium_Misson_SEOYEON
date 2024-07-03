@@ -34,11 +34,8 @@ public class Post extends BaseEntity {
 
     private String title;
 
-    @Column(columnDefinition = "TEXT")
-    private String body;
-
     @ManyToOne(fetch = LAZY)
-    private PostDetail postDetailBody;
+    private PostDetail detailBody;
 
     private boolean published;
 
