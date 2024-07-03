@@ -43,6 +43,14 @@
             <input type="hidden" name="_method" value="delete">
             <button type="submit" onclick="return confirm('정말로 삭제하시겠습니까?');">글 삭제</button>
         </form>
+
+        <th:block th:if="${@rq.login}">
+            <h3>댓글 작성</h3>
+            <form th:action="|/post/${post.id}/comment/write|" method="POST">
+                <textarea name="body" cols="30" rows="10" required maxlength="10000" placeholder="댓글"></textarea>
+                <button>댓글 작성</button>
+            </form>
+        </th:block>
     </div>
 </div>
 </body>

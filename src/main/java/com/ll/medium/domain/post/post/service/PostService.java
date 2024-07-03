@@ -4,6 +4,7 @@ import com.ll.medium.domain.member.member.entity.Member;
 import com.ll.medium.domain.member.member.repository.MemberRepository;
 import com.ll.medium.domain.post.post.entity.Post;
 import com.ll.medium.domain.post.post.repository.PostRepository;
+import com.ll.medium.domain.post.postComment.entity.PostComment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -94,8 +95,14 @@ public class PostService {
     public void like(Member author, Post post) {
         post.addLike(author);
     }
+
     @Transactional
     public void cancelLike(Member author, Post post) {
         post.deleteLike(author);
+    }
+
+    @Transactional
+    public PostComment writeComment(Member author, Post post, String body) {
+        return post.writeComment(author, body);
     }
 }
