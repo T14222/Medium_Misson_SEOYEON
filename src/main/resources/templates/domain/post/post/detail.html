@@ -25,6 +25,11 @@
     </div>
 
     <div>
+        <h3>조회수</h3>
+        <div th:text="${#numbers.formatInteger(post.hit, 3, 'COMMA')}"></div>
+    </div>
+
+    <div>
         <button onclick="history.back();">뒤로가기</button>
 
         <a th:if="${@postService.canModify(@rq.member, post)}" th:href="|/post/${post.id}/modify|">글 수정</a>
