@@ -10,6 +10,9 @@ import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static jakarta.persistence.CascadeType.ALL;
+import static jakarta.persistence.FetchType.LAZY;
+
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -17,22 +20,25 @@ import java.util.List;
 @Getter
 @Setter
 public class Post extends BaseEntity {
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "post", cascade = ALL, orphanRemoval = true)
     @Builder.Default
     private List<PostLike> likes = new ArrayList<>();
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "post", cascade = ALL, orphanRemoval = true)
     @Builder.Default
     @OrderBy("id DESC")
     private List<PostComment> comments = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = LAZY)
     private Member author;
 
     private String title;
 
     @Column(columnDefinition = "TEXT")
     private String body;
+
+    @ManyToOne(fetch = LAZY)
+    private PostDetail postDetailBody;
 
     private boolean published;
 

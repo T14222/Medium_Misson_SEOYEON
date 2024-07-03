@@ -92,6 +92,7 @@ public class PostService {
         PostDetail postDetailBody = findDetail(post, "common__body");
 
         postDetailBody.setVal(body);
+        post.setPostDetailBody(postDetailBody);
     }
 
     private PostDetail findDetail(Post post, String name) {

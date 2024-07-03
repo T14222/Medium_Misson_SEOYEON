@@ -8,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import lombok.*;
 
+import static jakarta.persistence.FetchType.LAZY;
 import static lombok.AccessLevel.PROTECTED;
 
 @Entity
@@ -17,10 +18,10 @@ import static lombok.AccessLevel.PROTECTED;
 @Getter
 @Setter
 public class PostComment extends BaseEntity {
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     private Member author;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     private Post post;
 
     @Column(columnDefinition = "TEXT")

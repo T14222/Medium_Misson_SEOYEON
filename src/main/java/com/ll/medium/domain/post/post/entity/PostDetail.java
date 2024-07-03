@@ -4,6 +4,7 @@ import com.ll.medium.global.jpa.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import static jakarta.persistence.FetchType.LAZY;
 import static lombok.AccessLevel.PROTECTED;
 
 @Table(uniqueConstraints = {
@@ -16,7 +17,7 @@ import static lombok.AccessLevel.PROTECTED;
 @Getter
 @Setter
 public class PostDetail extends BaseEntity {
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = LAZY)
     private Post post;
 
     private String name;
