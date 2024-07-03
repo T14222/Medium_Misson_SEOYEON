@@ -42,6 +42,8 @@ public class Post extends BaseEntity {
     @Setter(PROTECTED)
     private long hit;
 
+    private int minMembershipLevel;
+
     public void increaseHit() {
         hit++;
     }

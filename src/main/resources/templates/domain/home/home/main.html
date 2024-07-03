@@ -13,7 +13,7 @@
 
     <ul>
         <li th:each="post : ${posts}">
-            <a th:href="|/post/${post.id}|" th:text="${post.title}"></a>
+            <th:block th:replace="domain/post/post/fragments/postListItem :: postListItem(${post})"/>
         </li>
     </ul>
 </div>

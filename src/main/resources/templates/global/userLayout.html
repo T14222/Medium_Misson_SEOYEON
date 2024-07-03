@@ -17,6 +17,9 @@
     <a th:if="${@rq.logout}"  href="/member/login">로그인</a>
     <a th:if="${@rq.logout}" href="/member/join">회원가입</a>
     <a th:if="${@rq.login}" href="/member/logout">로그아웃</a>
+    <span th:if="${@rq.login}">
+        [[${@rq.member.username}]] / [[${@rq.member.membershipLevel}]]
+    </span>
 </header>
 
 </body>

@@ -14,6 +14,9 @@
     <a href="/adm/home/about">관리자 설명</a>
     <a href="/adm/member/list">회원</a>
     <a href="/member/logout">로그아웃</a>
+    <span th:if="${@rq.login}">
+        [[${@rq.member.username}]] / [[${@rq.member.membershipLevel}]]
+    </span>
 </header>
 
 </body>

@@ -1,0 +1,16 @@
+<html>
+<head>
+
+</head>
+
+<body>
+
+<div th:fragment="postListItem(post)">
+    <a th:href="@{/post/{id}(id=${post.id})}">
+        <span th:text="${post.title}">제목</span>
+    </a>
+    <div th:text="${post.createDate}">작성일</div>
+    <div th:text="${post.minMembershipLevel}">레벨</div>
+</div>
+</body>
+</html>
