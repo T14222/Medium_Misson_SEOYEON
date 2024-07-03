@@ -2,6 +2,7 @@ package com.ll.medium.domain.post.post.entity;
 
 import com.ll.medium.global.jpa.BaseEntity;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToOne;
 import lombok.*;
 
@@ -14,7 +15,7 @@ import static lombok.AccessLevel.PROTECTED;
 @Getter
 @Setter
 public class PostDetail extends BaseEntity {
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Post post;
 
     private String name;

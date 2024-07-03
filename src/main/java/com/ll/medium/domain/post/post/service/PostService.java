@@ -108,6 +108,8 @@ public class PostService {
     }
 
     public boolean canDelete(Member author, Post post) {
+        if (author == null) return false;
+
         if (author.isAdmin()) return true;
 
         return author.equals(post.getAuthor());

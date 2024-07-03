@@ -10,21 +10,18 @@ import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static jakarta.persistence.CascadeType.ALL;
-import static lombok.AccessLevel.PROTECTED;
-
 @Entity
-@NoArgsConstructor(access = PROTECTED)
-@AllArgsConstructor(access = PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
 @Getter
 @Setter
 public class Post extends BaseEntity {
-    @OneToMany(mappedBy = "post", cascade = ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     private List<PostLike> likes = new ArrayList<>();
 
-    @OneToMany(mappedBy = "post", cascade = ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     @OrderBy("id DESC")
     private List<PostComment> comments = new ArrayList<>();
@@ -39,7 +36,7 @@ public class Post extends BaseEntity {
 
     private boolean published;
 
-    @Setter(PROTECTED)
+    @Setter(AccessLevel.PROTECTED)
     private long hit;
 
     private int minMembershipLevel;
@@ -57,10 +54,12 @@ public class Post extends BaseEntity {
                 .member(member)
                 .build());
     }
+
     public boolean hasLike(Member member) {
         return likes.stream()
                 .anyMatch(postLike -> postLike.getMember().equals(member));
     }
+
     public void deleteLike(Member member) {
         likes.removeIf(postLike -> postLike.getMember().equals(member));
     }
