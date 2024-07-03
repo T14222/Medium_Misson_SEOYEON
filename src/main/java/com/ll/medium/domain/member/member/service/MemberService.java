@@ -21,6 +21,11 @@ public class MemberService {
 
     @Transactional
     public RsData<Member> join(String username, String password) {
+        return join(username, password, 0);
+    }
+
+    @Transactional
+    public RsData<Member> join(String username, String password, int membershipLevel) {
         if (findByUsername(username).isPresent()) {
             return RsData.of("400-2", "이미 존재하는 회원입니다.");
         }
@@ -28,6 +33,7 @@ public class MemberService {
         Member member = Member.builder()
                 .username(username)
                 .password(passwordEncoder.encode(password))
+                .membershipLevel(membershipLevel)
                 .build();
         memberRepository.save(member);
 
