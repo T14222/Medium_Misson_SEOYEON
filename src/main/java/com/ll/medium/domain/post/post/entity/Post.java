@@ -1,7 +1,7 @@
 package com.ll.medium.domain.post.post.entity;
 
 import com.ll.medium.domain.member.member.entity.Member;
-import com.ll.medium.domain.post.post.postLike.entity.PostLike;
+import com.ll.medium.domain.post.postLike.entity.PostLike;
 import com.ll.medium.global.jpa.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -22,6 +22,10 @@ import static lombok.AccessLevel.PROTECTED;
 @Getter
 @Setter
 public class Post extends BaseEntity {
+    @OneToMany(mappedBy = "post", cascade = ALL, orphanRemoval = true)
+    @Builder.Default
+    private List<PostLike> likes = new ArrayList<>();
+
     @ManyToOne(fetch = FetchType.LAZY)
     private Member author;
 
@@ -36,5 +40,22 @@ public class Post extends BaseEntity {
 
     public void increaseHit() {
         hit++;
+    }
+
+    public void addLike(Member member) {
+        if (hasLike(member)) {
+            return;
+        }
+        likes.add(PostLike.builder()
+                .post(this)
+                .member(member)
+                .build());
+    }
+    public boolean hasLike(Member member) {
+        return likes.stream()
+                .anyMatch(postLike -> postLike.getMember().equals(member));
+    }
+    public void deleteLike(Member member) {
+        likes.removeIf(postLike -> postLike.getMember().equals(member));
     }
 }

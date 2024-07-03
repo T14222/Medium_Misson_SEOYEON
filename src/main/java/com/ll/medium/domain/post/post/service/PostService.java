@@ -49,7 +49,21 @@ public class PostService {
         return postRepository.search(author, isPublished, kw, pageable);
     }
 
+    public boolean canLike(Member author, Post post) {
+        if (author == null) return false;
+
+        return !post.hasLike(author);
+    }
+
+    public boolean canCancelLike(Member author, Post post) {
+        if (author == null) return false;
+
+        return post.hasLike(author);
+    }
+
     public boolean canModify(Member author, Post post) {
+        if (author == null) return false;
+        
         return author.equals(post.getAuthor());
     }
 
@@ -74,5 +88,14 @@ public class PostService {
     @Transactional
     public void increaseHit(Post post) {
         post.increaseHit();
+    }
+
+    @Transactional
+    public void like(Member author, Post post) {
+        post.addLike(author);
+    }
+    @Transactional
+    public void cancelLike(Member author, Post post) {
+        post.deleteLike(author);
     }
 }
