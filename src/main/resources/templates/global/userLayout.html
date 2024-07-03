@@ -10,7 +10,9 @@
     <h1 th:text="|${@appConfig.siteName}|"></h1>
 
     <a href="/">홈</a>
-    <a th:if="${@rq.login}" href="/post/write">글 작성</a>
+    <form th:if="${@rq.login}" th:action="@{/post/makeTemp}" method="post">
+        <button type="submit">글 작성</button>
+    </form>
     <a href="/post/list">전체 글 목록</a>
     <a th:if="${@rq.login}" href="/post/myList">내 글 목록</a>
     <a th:if="${@rq.admin}" href="/adm">관리자 홈</a>

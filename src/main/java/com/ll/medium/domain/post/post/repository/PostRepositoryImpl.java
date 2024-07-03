@@ -20,14 +20,11 @@ import static com.ll.medium.domain.post.post.entity.QPost.post;
 public class PostRepositoryImpl implements PostRepositoryCustom {
     private final JPAQueryFactory jpaQueryFactory;
 
-    public Page<Post> search (
-            boolean isPublished,
-            String kw,
-            Pageable pageable
-    ) {
+    public Page<Post> search(boolean published, String kw, Pageable pageable) {
+
         // 조건 생성
         BooleanExpression condition = post
-                .isPublished.eq(isPublished);
+                .published.eq(published);
 
         if (kw != null && !kw.isBlank()) {
             condition = condition.and(
@@ -41,10 +38,9 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
                 .from(post)
                 .where(condition);
 
-
         for (Sort.Order o : pageable.getSort()) {
             PathBuilder pathBuilder = new PathBuilder(post.getType(), post.getMetadata());
-            postsQuery.orderBy(new OrderSpecifier<>(o.isAscending() ? Order.ASC : Order.DESC, pathBuilder.get(o.getProperty())));
+            postsQuery.orderBy(new OrderSpecifier(o.isAscending() ? Order.ASC : Order.DESC, pathBuilder.get(o.getProperty())));
         }
 
         postsQuery
@@ -61,14 +57,14 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
     }
 
     @Override
-    public Page<Post> search(Member author, Boolean isPublished, String kw, Pageable pageable) {
+    public Page<Post> search(Member author, Boolean published, String kw, Pageable pageable) {
         // 조건 생성
         BooleanExpression condition = post
                 .author.eq(author);
 
-        if (isPublished != null) {
+        if (published != null) {
             condition = condition.and(
-                    post.isPublished.eq(isPublished)
+                    post.published.eq(published)
             );
         }
 
@@ -84,10 +80,9 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
                 .from(post)
                 .where(condition);
 
-
         for (Sort.Order o : pageable.getSort()) {
             PathBuilder pathBuilder = new PathBuilder(post.getType(), post.getMetadata());
-            postsQuery.orderBy(new OrderSpecifier<>(o.isAscending() ? Order.ASC : Order.DESC, pathBuilder.get(o.getProperty())));
+            postsQuery.orderBy(new OrderSpecifier(o.isAscending() ? Order.ASC : Order.DESC, pathBuilder.get(o.getProperty())));
         }
 
         postsQuery

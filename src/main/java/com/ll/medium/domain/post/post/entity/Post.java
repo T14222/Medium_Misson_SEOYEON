@@ -37,7 +37,7 @@ public class Post extends BaseEntity {
     @Column(columnDefinition = "TEXT")
     private String body;
 
-    private boolean isPublished;
+    private boolean published;
 
     @Setter(PROTECTED)
     private long hit;

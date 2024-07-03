@@ -6,6 +6,10 @@
 <div layout:fragment="content">
     <h1>글 내용</h1>
     <div>
+        <label>번호</label>
+        <div th:text="${post.id}"></div>
+    </div>
+    <div>
         <h3>조회수</h3>
         <div th:text="${#numbers.formatInteger(post.hit, 3, 'COMMA')}"></div>
     </div>
@@ -28,7 +32,7 @@
     <hr>
     <div>
         <button onclick="history.back();">뒤로가기</button>
-        <a th:if="${@postService.canModify(@rq.member, post)}" th:href="|/post/${post.id}/modify|">글 수정</a>
+        <a th:if="${@postService.canModify(@rq.member, post)}" th:href="|/post/${post.id}/edit|">글 수정</a>
 
         <form th:if="${@postService.canLike(@rq.member, post)}" th:action="|/post/${post.id}/like|" method="post" style="display: inline;">
             <button type="submit">추천</button>
