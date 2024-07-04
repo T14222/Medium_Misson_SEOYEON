@@ -4,6 +4,7 @@
 </head>
 <body>
 <div layout:fragment="content">
+    <th:block th:replace="global/fragments/toastUiEditorLib :: toastUiEditorLib"></th:block>
     <h1>글 내용</h1>
     <div>
         <label>번호</label>
@@ -32,8 +33,15 @@
     </div>
     <div>
         <h3>내용</h3>
-        <div th:if="${@postService.canRead(@rq.member, post)}"  style="white-space: pre-wrap;" th:text="${post.detailBody.val}"></div>
-        <div th:unless="${@postService.canRead(@rq.member, post)}"  style="white-space: pre-wrap;">비공개 글</div>
+        <div th:if="${@postService.canRead(@rq.member, post)}"
+             class="toast-ui-viewer"
+        >
+            <script type="text/x-template" th:utext="${post.detailBody?.val}"></script>
+        </div>
+
+        <div th:unless="${@postService.canRead(@rq.member, post)}">
+            비공개
+        </div>
     </div>
     <hr>
     <div>
