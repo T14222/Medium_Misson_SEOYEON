@@ -21,6 +21,7 @@
     <a th:if="${@rq.login}" href="/member/logout">로그아웃</a>
     <span th:if="${@rq.login}">
         [[${@rq.member.username}]] / [[${@rq.member.membershipLevel}]]
+        <img style="width:50px;" th:src="${@rq.profileImgUrl}">
     </span>
 </header>
 

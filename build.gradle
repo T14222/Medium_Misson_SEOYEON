@@ -66,6 +66,8 @@ dependencies {
     // TEST
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+    // 티카
+    implementation 'org.apache.tika:tika-core:2.9.1'
 }
 
 tasks.named('test') {
