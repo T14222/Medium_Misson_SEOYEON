@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -52,8 +53,8 @@ public class PostService {
         return postRepository.findById(id);
     }
 
-    public Page<Post> search(String kw, Pageable pageable) {
-        return postRepository.search(true, kw, pageable);
+    public Page<Post> search(List<String> kwTypes, String kw, Pageable pageable) {
+        return postRepository.search(true, kwTypes, kw, pageable);
     }
 
     public Page<Post> search(Member author, Boolean published, String kw, Pageable pageable) {

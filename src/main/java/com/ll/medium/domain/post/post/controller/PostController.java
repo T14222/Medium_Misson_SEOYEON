@@ -5,6 +5,7 @@ import com.ll.medium.domain.post.post.service.PostService;
 import com.ll.medium.global.exception.GlobalException;
 import com.ll.medium.global.rq.Rq.Rq;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -16,10 +17,11 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import jakarta.validation.constraints.NotBlank;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/post")
@@ -42,6 +44,7 @@ public class PostController {
 
     @GetMapping("/list")
     public String showList(
+            @RequestParam(value = "kwType", defaultValue = "title,body") List<String> kwTypes,
             @RequestParam(defaultValue = "") String kw,
             @RequestParam(defaultValue = "1") int page
     ) {
@@ -49,9 +52,17 @@ public class PostController {
         sorts.add(Sort.Order.desc("id"));
         Pageable pageable = PageRequest.of(page - 1, 10, Sort.by(sorts));
 
-        Page<Post> postPage = postService.search(kw, pageable);
+        Page<Post> postPage = postService.search(kwTypes, kw, pageable);
         rq.setAttribute("postPage", postPage);
         rq.setAttribute("page", page);
+
+        Map<String, Boolean> kwTypesMap = kwTypes
+                .stream()
+                .collect(Collectors.toMap(
+                        kwType -> kwType,
+                        kwType -> true
+                ));
+        rq.setAttribute("kwTypesMap", kwTypesMap);
 
         return "domain/post/post/list";
     }
