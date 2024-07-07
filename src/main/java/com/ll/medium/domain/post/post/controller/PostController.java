@@ -81,7 +81,6 @@ public class PostController {
         return rq.redirect("/post/%d/edit".formatted(post.getId()), post.getId() + "번 임시글이 생성되었습니다.");
     }
 
-
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/{id}/edit")
     public String showEdit(@PathVariable long id, Model model) {
@@ -154,7 +153,7 @@ public class PostController {
 
         postService.like(rq.getMember(), post);
 
-        return rq.redirect(redirectUrl + post.getId(), post.getId() + "번 글을 추천하였습니다.");
+        return rq.redirect(redirectUrl, post.getId() + "번 글을 추천하였습니다.");
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -171,6 +170,6 @@ public class PostController {
 
         postService.cancelLike(rq.getMember(), post);
 
-        return rq.redirect(redirectUrl + post.getId(), post.getId() + "번 글을 추천취소하였습니다.");
+        return rq.redirect(redirectUrl, post.getId() + "번 글을 추천취소하였습니다.");
     }
 }

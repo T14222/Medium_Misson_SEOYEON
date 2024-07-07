@@ -73,7 +73,7 @@ public class MemberService {
             saveProfileImg(member, profileImgFilePath);
         }
 
-        return RsData.of("200", "%s님 환영합니다. 로그인 후 이용해주세요.".formatted(member.getUsername()), member);
+        return RsData.of("200", "%s님 환영합니다. 회원가입이 완료되었습니다. 로그인 후 이용해주세요.".formatted(member.getUsername()), member);
     }
 
     private void saveProfileImg(Member member, String profileImgFilePath) {
@@ -83,7 +83,7 @@ public class MemberService {
     public String getProfileImgUrl(Member member) {
         return Optional.ofNullable(member)
                 .flatMap(this::findProfileImgUrl)
-                .orElse("https://placehold.co/30x30?text=UU");
+                .orElse("https://placehold.co/30x30?text=:D");
     }
 
     private Optional<String> findProfileImgUrl(Member member) {
